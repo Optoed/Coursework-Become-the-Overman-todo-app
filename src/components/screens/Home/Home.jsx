@@ -33,8 +33,19 @@ const Home = () => {
 	const changeTodo = (id) => {
 		const copy = [...todos];
 		const current = copy.find((t) => t._id === id);
-		current.isCompleted = !current.isCompleted;
-		setTodos(copy);
+		if (current) {
+			// Создаем копию найденной задачи с обновленным полем isCompleted
+			const updatedTodo = {
+				...current,
+				isCompleted: !current.isCompleted,
+			};
+			// Находим индекс найденной задачи в массиве
+			const index = copy.indexOf(current);
+			// Заменяем найденную задачу на обновленную в копии массива
+			copy[index] = updatedTodo;
+			// Обновляем состояние todos новым массивом
+			setTodos(copy);
+		}
 	};
 
 	const removeTodo = (id) => {
@@ -55,28 +66,26 @@ const Home = () => {
 
 	// window.addTodo = addTodo //для теста, пишешь в консоли и указываешь текст задания addTodo('Пойти в gym')
 
-	const editTodo = (id) => {
-		const copy = [...todos];
-		// console.log(id);
-		const current = copy.filter((t) =>
-			t._id === id ? (t.title = 'New title') : t
-		);
-		// console.log(current);
-		setTodos(copy);
+	// РЕДАКТИРОВАНИЕ ЗАДАЧИ
+
+	const editTodo = (id, newTitle) => {
+		const updatedTodos = todos.map((todo) => {
+			if (todo._id === id) {
+				return {
+					...todo,
+					title: newTitle,
+				};
+			}
+			return todo;
+		});
+		setTodos(updatedTodos);
 	};
 
-	//console.log(todos)
-
 	return (
-		<div className=' text-white w-4/5 mx-auto'>
+		<div className=' text-white w-4/5 mx-auto max-w-full'>
 			<h1 className='text-3xl font-bold text-center mb-8'>
 				Become the Overman
 			</h1>
-
-			{/* ДОБАВИТЬ ЗАДАЧУ */}
-			{/* <button onClick={() => addTodo()} className='flex items-center justify-center mx-auto mb-4 p-2 border-2 rounded-lg border-pink-700 bg-pink-700 hover:border-pink-600 hover:bg-pink-600 transition-colors ease-in-out duration-300'>
-				<span className=''>Add a new task</span>
-			</button> */}
 
 			{todos.map((todo) => (
 				<TodoItem

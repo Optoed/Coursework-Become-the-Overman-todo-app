@@ -30,7 +30,7 @@ const CreateTodoField = ({ addTodo }) => {
 	};
 
 	return (
-		<div className='flex items-center justify-between mb-4 rounded-2xl border-zinc-800 border-2 px-5 py-3 w-full mt-20'>
+		<div className='flex items-center justify-between mb-4 rounded-2xl border-zinc-800 border-2 px-5 py-3 w-full max-w-full mt-20'>
 			<input
 				type='text'
 				onChange={handleChange}
@@ -39,7 +39,7 @@ const CreateTodoField = ({ addTodo }) => {
 				value={title}
 				onKeyUp={(e) => e.key === 'Enter' && handleAddTodo()}
 				//className='text-zinc-800 px-4 py-2 rounded-lg border-2 border-white focus:outline-none focus:border-pink-400 transition-colors ease-in-out duration-300 w-1/2 max-w-full' //bg-transparent - для прозрачности
-				className='bg-transparent w-full border-none outline-none'
+				className='bg-transparent w-full max-w-full border-none outline-none'
 				placeholder="What's next, Hero?"
 			/>
 		</div>

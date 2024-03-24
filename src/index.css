@@ -17,3 +17,16 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
 }
+
+/* Для узких экранов (мобильные устройства) */
+@media screen and (max-width: 768px) {
+	.flex-container {
+		flex-direction: column; /* Изменяем направление flex на столбец */
+	}
+
+	.column {
+		width: 100%; /* Задаем ширину элемента на всю доступную ширину */
+		margin-right: 0;
+		margin-left: 0;
+	}
+}

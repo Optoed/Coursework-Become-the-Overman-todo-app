@@ -81,13 +81,51 @@ const Home = () => {
 		setTodos(updatedTodos);
 	};
 
+	// Делим на группы по типу: "не выполненные / выполненные"
+	const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
+	const completedTodos = todos.filter((todo) => todo.isCompleted);
+
 	return (
 		<div className=' text-white w-4/5 mx-auto max-w-full'>
 			<h1 className='text-3xl font-bold text-center mb-8'>
 				Become the Overman
 			</h1>
 
-			{todos.map((todo) => (
+			{/* Столбцы с задачами по типу: "не выполненные / выполненные" */}
+			<div className='flex justify-between flex-container'>
+				{/* column - смотри в css, это для адаптивной верстки */}
+				<div className='w-1/2 max-w-1/2 mb-4 column mr-4'>
+					<h2 className='text-xl font-bold flex items-center justify-center mb-2'>
+						Uncompleted Tasks
+					</h2>
+					{incompleteTodos.map((todo) => (
+						<TodoItem
+							key={todo._id}
+							todo={todo}
+							changeTodo={changeTodo}
+							removeTodo={removeTodo}
+							editTodo={editTodo}
+						/>
+					))}
+				</div>
+
+				<div className='w-1/2 max-w-1/2 mb-4 column ml-4'>
+					<h2 className='text-xl font-bold flex items-center justify-center mb-2'>
+						Completed Tasks
+					</h2>
+					{completedTodos.map((todo) => (
+						<TodoItem
+							key={todo._id}
+							todo={todo}
+							changeTodo={changeTodo}
+							removeTodo={removeTodo}
+							editTodo={editTodo}
+						/>
+					))}
+				</div>
+			</div>
+
+			{/* {todos.map((todo) => (
 				<TodoItem
 					key={todo._id}
 					todo={todo}
@@ -95,7 +133,7 @@ const Home = () => {
 					removeTodo={removeTodo}
 					editTodo={editTodo}
 				/>
-			))}
+			))} */}
 
 			{/* Поле для добавления новой задачи */}
 			<CreateTodoField addTodo={addTodo} />

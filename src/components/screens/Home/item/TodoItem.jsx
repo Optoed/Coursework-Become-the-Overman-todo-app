@@ -33,25 +33,27 @@ const TodoItem = ({ todo, changeTodo, removeTodo, editTodo }) => {
 				<Check isCompleted={todo.isCompleted} />
 			</button>
 
-			{isEditing ? (
-				<input
-					type='text'
-					value={editedTitle}
-					onChange={(e) => setEditedTitle(e.target.value)}
-					onBlur={handleSave}
-					autoFocus
-					className={`${
-						todo.isCompleted ? 'line-through' : ''
-					} bg-transparent w-full max-w-full border-none outline-none`}
-				/>
-			) : (
-				<span
-					className={` ${
-						todo.isCompleted ? 'line-through' : ''
-					} max-w-full`}>
-					{todo.title}
-				</span>
-			)}
+			<div className=' overflow-hidden'>
+				{isEditing ? (
+					<input
+						type='text'
+						value={editedTitle}
+						onChange={(e) => setEditedTitle(e.target.value)}
+						onBlur={handleSave}
+						autoFocus
+						className={` ${
+							todo.isCompleted ? 'line-through' : ''
+						} bg-transparent border-none outline-none`}
+					/>
+				) : (
+					<span
+						className={` ${
+							todo.isCompleted ? 'line-through' : ''
+						}`}>
+						{todo.title}
+					</span>
+				)}
+			</div>
 
 			<div className='ml-auto flex items-center'>
 				{/* Edit */}

@@ -1,8 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 
+import { redirect } from 'react-router-dom';
+
 import TodoItem from './item/TodoItem';
 import CreateTodoField from './create-todo-field/CreateTodoField';
+
+import Header from '../../screens/header/Header';
 
 const data = [
 	{
@@ -86,11 +90,9 @@ const Home = () => {
 	const completedTodos = todos.filter((todo) => todo.isCompleted);
 
 	return (
-		<div className=' text-white w-4/5 mx-auto max-w-full'>
-			<h1 className='text-3xl font-bold text-center mb-8'>
-				Become the Overman
-			</h1>
+		// <redirect to='/login' />
 
+		<div className=' text-white w-4/5 mx-auto max-w-full'>
 			{/* Столбцы с задачами по типу: "не выполненные / выполненные" */}
 			<div className='flex justify-between flex-container'>
 				{/* column - смотри в css, это для адаптивной верстки */}

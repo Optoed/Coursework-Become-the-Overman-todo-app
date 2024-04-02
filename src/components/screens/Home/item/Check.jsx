@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { BsCheck } from 'react-icons/bs'
+import { BsCheck } from 'react-icons/bs';
 
 const Check = ({ isCompleted }) => {
 	return (
@@ -10,7 +10,7 @@ const Check = ({ isCompleted }) => {
 			} w-6 h-6 mr-3 flex items-center justify-center transition-colors ease-in-out duration-300`}>
 			{isCompleted && <BsCheck size={24} className='text-gray-900' />}
 		</div>
-	)
-}
+	);
+};
 
-export default Check
+export default Check;

@@ -92,7 +92,7 @@ const Home = () => {
 	return (
 		// <redirect to='/login' />
 
-		<div className=' text-white w-4/5 mx-auto max-w-full'>
+		<div className=''>
 			{/* Столбцы с задачами по типу: "не выполненные / выполненные" */}
 			<div className='flex justify-between flex-container'>
 				{/* column - смотри в css, это для адаптивной верстки */}

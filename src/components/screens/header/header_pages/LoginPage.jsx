@@ -10,7 +10,7 @@ const LoginPage = () => {
 	const handleSignIn = () => {
 		// Здесь должна быть ваша логика аутентификации
 		// После успешной аутентификации перенаправляем пользователя на страницу Home
-		// history.push('/');
+		//history.push('/');
 	};
 
 	return (
@@ -45,7 +45,7 @@ const LoginPage = () => {
 							onKeyUp={(e) => e.key === 'Enter'}
 							//className='text-zinc-800 px-4 py-2 rounded-lg border-2 border-white focus:outline-none focus:border-pink-400 transition-colors ease-in-out duration-300 w-1/2 max-w-full' //bg-transparent - для прозрачности
 							className='bg-transparent w-full max-w-full border-none outline-none'
-							placeholder='Write your username'
+							placeholder='Write your password'
 						/>
 					</div>
 
@@ -53,7 +53,7 @@ const LoginPage = () => {
 						<button
 							// onClick={handleSignIn}
 							className='border-2 rounded-lg border-pink-600 hover:border-pink-500 hover:bg-pink-500 px-10 py-1 text-center transition-colors ease-in-out duration-700'>
-							Sign In
+							<Link to='/'>Sign In</Link>
 						</button>
 					</div>
 				</div>

@@ -1,3 +1,6 @@
+My course work, for the 2nd year at the university. Implementation of frontend and further backend for todo-application. Next, it is planned to introduce artificial intelligence to help the user plan their business correctly and remind them about them. Of course, many more features will be added, such as rating, a system of tests and rewards, common affairs, gamification, and so on. Well, that's going to be cool!
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

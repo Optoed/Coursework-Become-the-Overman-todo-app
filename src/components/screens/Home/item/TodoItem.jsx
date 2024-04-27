@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
-
 import { BsTrash } from 'react-icons/bs';
-
-//на выбор
-import { MdOutlineModeEdit } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 
 import Check from './Check';

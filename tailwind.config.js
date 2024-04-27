@@ -5,4 +5,10 @@ module.exports = {
 		extend: {},
 	},
 	plugins: [],
-}
+
+	// Еще нужно будет добавить что-то в vite.config.js
+
+	// corePlugins: {
+	// 	preflight: false, //Нужно для того, чтобы не конфликтовали Ant Design и Tailwind
+	// },
+};

@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { redirect } from 'react-router-dom';
 
 import TodoItem from './item/TodoItem';
@@ -43,12 +42,9 @@ const Home = () => {
 				...current,
 				isCompleted: !current.isCompleted,
 			};
-			// Находим индекс найденной задачи в массиве
-			const index = copy.indexOf(current);
-			// Заменяем найденную задачу на обновленную в копии массива
-			copy[index] = updatedTodo;
-			// Обновляем состояние todos новым массивом
-			setTodos(copy);
+			const index = copy.indexOf(current); // Находим индекс найденной задачи в массиве
+			copy[index] = updatedTodo; // Заменяем найденную задачу на обновленную в копии массива
+			setTodos(copy); // Обновляем состояние todos новым массивом
 		}
 	};
 
@@ -64,11 +60,9 @@ const Home = () => {
 			title,
 			isCompleted: false,
 		};
-		// setTodos([newTodo, ...todos]);
+		// setTodos([newTodo, ...todos]); //если хотим добавлять в начало
 		setTodos([...todos, newTodo]);
 	};
-
-	// window.addTodo = addTodo //для теста, пишешь в консоли и указываешь текст задания addTodo('Пойти в gym')
 
 	// РЕДАКТИРОВАНИЕ ЗАДАЧИ
 
@@ -90,8 +84,6 @@ const Home = () => {
 	const completedTodos = todos.filter((todo) => todo.isCompleted);
 
 	return (
-		// <redirect to='/login' />
-
 		<div className=''>
 			{/* Столбцы с задачами по типу: "не выполненные / выполненные" */}
 			<div className='flex justify-between flex-container'>
@@ -126,16 +118,6 @@ const Home = () => {
 					))}
 				</div>
 			</div>
-
-			{/* {todos.map((todo) => (
-				<TodoItem
-					key={todo._id}
-					todo={todo}
-					changeTodo={changeTodo}
-					removeTodo={removeTodo}
-					editTodo={editTodo}
-				/>
-			))} */}
 
 			{/* Поле для добавления новой задачи */}
 			<CreateTodoField addTodo={addTodo} />

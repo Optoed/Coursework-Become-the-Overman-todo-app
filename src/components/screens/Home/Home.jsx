@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { redirect } from 'react-router-dom';
+import axios from 'axios';
+//import { redirect } from 'react-router-dom';
 
 import TodoItem from './item/TodoItem';
 import CreateTodoField from './create-todo-field/CreateTodoField';
-
-import Header from '../../screens/header/Header';
+//import Header from '../../screens/header/Header';
 
 const data = [
 	{
@@ -32,6 +32,22 @@ const data = [
 
 const Home = () => {
 	const [todos, setTodos] = useState(data);
+	// const [todos, setTodos] = useState([]);
+
+	// useEffect(() => {
+	// 	fetchTasks();
+	// }, []);
+
+	// const fetchTasks = async () => {
+	// 	try {
+	// 		const response = await axios.get(
+	// 			'http://localhost:8080/api/v1/tasks'
+	// 		);
+	// 		setTodos(response.data);
+	// 	} catch (error) {
+	// 		console.error('Error fetching tasks: ', error);
+	// 	}
+	// };
 
 	const changeTodo = (id) => {
 		const copy = [...todos];

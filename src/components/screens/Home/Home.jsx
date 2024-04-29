@@ -7,97 +7,104 @@ import TodoItem from './item/TodoItem';
 import CreateTodoField from './create-todo-field/CreateTodoField';
 //import Header from '../../screens/header/Header';
 
-const data = [
-	{
-		_id: '1',
-		title: 'Finish the essay collaboration',
-		isCompleted: false,
-	},
-	{
-		_id: '2',
-		title: 'Read next chapter of the book',
-		isCompleted: false,
-	},
-	{
-		_id: '3',
-		title: 'Finish the essay collaboration',
-		isCompleted: false,
-	},
-	{
-		_id: '4',
-		title: 'Send the finished assignment',
-		isCompleted: false,
-	},
-];
+// const data = [
+// 	{
+// 		_id: '1',
+// 		title: 'Finish the essay collaboration',
+// 		isCompleted: false,
+// 	},
+// 	{
+// 		_id: '2',
+// 		title: 'Read next chapter of the book',
+// 		isCompleted: false,
+// 	},
+// 	{
+// 		_id: '3',
+// 		title: 'Finish the essay collaboration',
+// 		isCompleted: false,
+// 	},
+// 	{
+// 		_id: '4',
+// 		title: 'Send the finished assignment',
+// 		isCompleted: false,
+// 	},
+// ];
 
 const Home = () => {
-	const [todos, setTodos] = useState(data);
-	// const [todos, setTodos] = useState([]);
+	//const [todos, setTodos] = useState(data);
+	const [todos, setTodos] = useState([]);
 
-	// useEffect(() => {
-	// 	fetchTasks();
-	// }, []);
+	useEffect(() => {
+		fetchTasks();
+	}, []);
 
-	// const fetchTasks = async () => {
-	// 	try {
-	// 		const response = await axios.get(
-	// 			'http://localhost:8080/api/v1/tasks'
-	// 		);
-	// 		setTodos(response.data);
-	// 	} catch (error) {
-	// 		console.error('Error fetching tasks: ', error);
-	// 	}
-	// };
-
-	const changeTodo = (id) => {
-		const copy = [...todos];
-		const current = copy.find((t) => t._id === id);
-		if (current) {
-			// Создаем копию найденной задачи с обновленным полем isCompleted
-			const updatedTodo = {
-				...current,
-				isCompleted: !current.isCompleted,
-			};
-			const index = copy.indexOf(current); // Находим индекс найденной задачи в массиве
-			copy[index] = updatedTodo; // Заменяем найденную задачу на обновленную в копии массива
-			setTodos(copy); // Обновляем состояние todos новым массивом
+	const fetchTasks = async () => {
+		try {
+			const response = await axios.get(
+				'http://localhost:8080/api/v1/tasks'
+			);
+			setTodos(response.data);
+		} catch (error) {
+			console.error('Error fetching tasks: ', error);
 		}
 	};
 
-	const removeTodo = (id) => {
-		const copy = [...todos];
-		const current = copy.filter((t) => t._id !== id);
-		setTodos(current);
-	};
-
-	const addTodo = (title) => {
-		const newTodo = {
-			_id: Math.random(),
-			title,
-			isCompleted: false,
-		};
-		// setTodos([newTodo, ...todos]); //если хотим добавлять в начало
-		setTodos([...todos, newTodo]);
-	};
-
-	// РЕДАКТИРОВАНИЕ ЗАДАЧИ
-
-	const editTodo = (id, newTitle) => {
-		const updatedTodos = todos.map((todo) => {
-			if (todo._id === id) {
-				return {
-					...todo,
-					title: newTitle,
-				};
+	//Поменять статус "Выполнено / Не выполнено" на противоположный
+	const changeTodo = async (id) => {
+		try {
+			const currentTask = todos.find((task) => task.id === id);
+			if (!currentTask) {
+				console.error('Task not found!');
+				return;
 			}
-			return todo;
-		});
-		setTodos(updatedTodos);
+
+			const updatedStatus = !currentTask.isCompleted;
+
+			await axios.put('http://localhost:8080/api/v1/tasks/${id}', {
+				isCompleted: updatedStatus,
+			});
+			fetchTasks();
+		} catch (error) {
+			console.error('Error changing task:', error);
+		}
+	};
+
+	const removeTodo = async (id) => {
+		try {
+			await axios.delete('http://localhost:8080/api/v1/tasks/${id}');
+			fetchTasks();
+		} catch (error) {
+			console.error('Error removing task:', error);
+		}
+	};
+
+	const addTodo = async (title) => {
+		try {
+			await axios.post('http://localhost:8080/api/v1/tasks', {
+				title,
+				isCompleted: false,
+			});
+			fetchTasks();
+		} catch (error) {
+			console.error('Error adding task:', error);
+		}
+	};
+
+	// Редактировать содержимое (название, подзадачи и тд) задачи
+	const editTodo = (id, newTitle) => {
+		try {
+			axios.put('http://localhost:8080/api/v1/tasks/${id}', {
+				title: newTitle,
+			});
+			fetchTasks();
+		} catch (error) {
+			console.error('Error editing task:', error);
+		}
 	};
 
 	// Делим на группы по типу: "не выполненные / выполненные"
-	const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
-	const completedTodos = todos.filter((todo) => todo.isCompleted);
+	//const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
+	//const completedTodos = todos.filter((todo) => todo.isCompleted);
 
 	return (
 		<div className=''>
@@ -108,30 +115,34 @@ const Home = () => {
 					<h2 className='text-xl font-bold flex items-center justify-center mb-2'>
 						Uncompleted Tasks
 					</h2>
-					{incompleteTodos.map((todo) => (
-						<TodoItem
-							key={todo._id}
-							todo={todo}
-							changeTodo={changeTodo}
-							removeTodo={removeTodo}
-							editTodo={editTodo}
-						/>
-					))}
+					{todos
+						.filter((todo) => !todo.isCompleted)
+						.map((todo) => (
+							<TodoItem
+								key={todo._id}
+								todo={todo}
+								changeTodo={changeTodo}
+								removeTodo={removeTodo}
+								editTodo={editTodo}
+							/>
+						))}
 				</div>
 
 				<div className='w-1/2 max-w-1/2 mb-4 column ml-4'>
 					<h2 className='text-xl font-bold flex items-center justify-center mb-2'>
 						Completed Tasks
 					</h2>
-					{completedTodos.map((todo) => (
-						<TodoItem
-							key={todo._id}
-							todo={todo}
-							changeTodo={changeTodo}
-							removeTodo={removeTodo}
-							editTodo={editTodo}
-						/>
-					))}
+					{todos
+						.filter((todo) => todo.isCompleted)
+						.map((todo) => (
+							<TodoItem
+								key={todo._id}
+								todo={todo}
+								changeTodo={changeTodo}
+								removeTodo={removeTodo}
+								editTodo={editTodo}
+							/>
+						))}
 				</div>
 			</div>
 

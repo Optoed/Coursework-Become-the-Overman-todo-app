@@ -8,22 +8,15 @@ const Header = ({ isLoggedIn, onLogout }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
 
 	const handleLogout = () => {
-		// Handle logout logic
 		if (typeof onLogout === 'function') {
 			onLogout();
 		}
 	};
 
 	return (
-		// <h1 className='text-3xl font-bold text-center mb-10 mt-10 text-white'>
-		// 	Become the Overman
-		// </h1>
-
-		////////////////////////////////////////////////////////////////////////////////////////////
-
-		<header className='bg-gray-800 text-white py-4 px-6 flex justify-between items-center'>
+		<header className='text-white py-4 px-6 flex justify-between items-center'>
 			<div className='logo text-2xl font-bold'>
-				<Link to='/'>Your Logo</Link>
+				<Link to='/'>Become OverMan</Link>
 			</div>
 
 			<nav>
@@ -55,12 +48,12 @@ const Header = ({ isLoggedIn, onLogout }) => {
 					<div className='flex gap-4'>
 						<Link
 							to='/login'
-							className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded'>
+							className='border-2 rounded-lg border-pink-600 hover:border-pink-500 hover:bg-pink-500 px-10 py-1 text-center transition-colors ease-in-out duration-700'>
 							Login
 						</Link>
 						<Link
 							to='/register'
-							className='bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded'>
+							className='border-2 rounded-lg border-pink-600 hover:border-pink-500 hover:bg-pink-500 px-10 py-1 text-center transition-colors ease-in-out duration-700'>
 							Register
 						</Link>
 					</div>

@@ -33,6 +33,16 @@ import CreateTodoField from './create-todo-field/CreateTodoField';
 const Home = () => {
 	//const [todos, setTodos] = useState(data);
 	const [todos, setTodos] = useState([]);
+	const [userId, setIdUser] = useState(null);
+
+	//Берем из локального хранилища id_user (вернее пытаемся)
+	useEffect(() => {
+        // Получаем id_user из локального хранилища при загрузке компонента
+        const storedIdUser = localStorage.getItem('userId');
+        if (storedIdUser) {
+            setIdUser(storedIdUser);
+        }
+    }, []);
 
 	useEffect(() => {
 		fetchTasks();
@@ -40,12 +50,16 @@ const Home = () => {
 
 	const fetchTasks = async () => {
 		try {
-			const response = await axios.get(
-				'http://localhost:8080/api/v1/tasks'
-			);
-			setTodos(response.data);
+			if (userId) {
+				const response = await axios.get(
+					'http://localhost:8080/...'
+				);
+				setTodos(response.data);
+			} else {
+				alert('You are not logged. Please, login yourself.')
+			}
 		} catch (error) {
-			console.error('Error fetching tasks: ', error);
+			console.error('Error fetching tasks (you have probems with connection): ', error);
 		}
 	};
 
@@ -107,6 +121,8 @@ const Home = () => {
 	//const completedTodos = todos.filter((todo) => todo.isCompleted);
 
 	return (
+		(userId) ?
+
 		<div className=''>
 			{/* Столбцы с задачами по типу: "не выполненные / выполненные" */}
 			<div className='flex justify-between flex-container'>
@@ -149,6 +165,9 @@ const Home = () => {
 			{/* Поле для добавления новой задачи */}
 			<CreateTodoField addTodo={addTodo} />
 		</div>
+
+		:
+		<div></div>
 	);
 };
 

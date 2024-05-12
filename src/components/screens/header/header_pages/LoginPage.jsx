@@ -5,13 +5,14 @@ import axios from 'axios';
 const LoginPage = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [userId, setUserId] = useState(null); // State to store user ID
 	const navigate = useNavigate(); // Changed from history to navigate
 
 	// Handle sign in logic
 	const handleSignIn = async () => {
 		try {
 			const response = await axios.post(
-				'http://localhost:8080/api/v1/auth/login',
+				'http://localhost:8000/user/login/',
 				{
 					username,
 					password,
@@ -19,7 +20,15 @@ const LoginPage = () => {
 			);
 			console.log(response.data); // Log the response for debugging
 			// Assuming your backend returns a success message upon successful login
-			if (response.data === 'success') {
+			if (response.data) {
+				const userIdResponse = await axios.get(`http://localhost:8000/user/${username}`);
+				//ВМЕСТО user_id сделай loggined_userId или как-то так
+				setUserId(userIdResponse.data.user_id);
+
+				// Сохраняем id_user в локальное хранилище
+				localStorage.setItem('userId', userId);
+
+				alert('You login successfully!');
 				navigate('/'); // Redirect to home page after successful login
 			} else {
 				// Display an alert if login is unsuccessful

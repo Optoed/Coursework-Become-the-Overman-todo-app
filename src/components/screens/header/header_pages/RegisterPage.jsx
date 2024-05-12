@@ -11,7 +11,7 @@ const RegisterPage = () => {
 	const handleRegister = async () => {
 		try {
 			const response = await axios.post(
-				'http://localhost:8080/api/v1/auth/register',
+				'http://localhost:8000/user/',
 				{
 					username,
 					password,
@@ -19,15 +19,16 @@ const RegisterPage = () => {
 			);
 			console.log(response.data); // Log the response for debugging
 			// Assuming your backend returns a success message upon successful registration
-			if (response.data === 'success') {
+			if (response.data) {
+				alert('Your account is created successfully!');
 				navigate('/login'); // Redirect to login page after successful registration
 			} else {
 				// Display an alert if registration is unsuccessful
-				alert('Registration failed. Please try again.');
+				alert('Registration failed. This username is already used. Please, try again with another username');
 			}
 		} catch (error) {
 			console.error('Registration error:', error);
-			alert('An error occurred during registration. Please try again.');
+			alert('An error occurred during registration. There is a problem with connection. Please try again.');
 		}
 	};
 
